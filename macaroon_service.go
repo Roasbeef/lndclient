@@ -134,6 +134,11 @@ func NewMacaroonService(cfg *MacaroonServiceConfig) (*MacaroonService, error) {
 		return &ms, nil
 	}
 
+	_, extendedKeyStore := ms.cfg.RootKeyStore.(macaroons.ExtendedRootKeyStore)
+	if !extendedKeyStore {
+		return &ms, nil
+	}
+
 	if cfg.LndClient == nil || cfg.EphemeralKey == nil ||
 		cfg.KeyLocator == nil {
 
